@@ -468,6 +468,8 @@ def opening_training_roster(content):
             end_date = f"{end_year} 年 {end_month} 月 {end_day} 日"
 
 
+        css_path = os.path.join(template_dir, 'bulma', 'css', 'bulma.min.css')
+        
         html_content = template.render(
             students=data,
             class_name=class_name,
@@ -476,28 +478,20 @@ def opening_training_roster(content):
             batch=batch,
             start_date=start_date,
             end_date=end_date,
-            learner_permit_date=learner_permit_date
+            learner_permit_date=learner_permit_date,
+            css_path=css_path
         )
 
-
-        temp_html_path = os.path.join(base_dir, "print", "temp_opening_training_rester.html")
+        temp_html_path = os.path.join(template_dir, "temp_opening_training_rester.html")
         with open(temp_html_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
         webbrowser.open_new_tab(f'file://{temp_html_path}')
 
         # 等待瀏覽器加載
-        time.sleep(3)
-        # 模擬鍵盤操作觸發打印 (Ctrl+P)
-        pyautogui.hotkey('ctrl', 'p', interval=0.1)
-        # 等待打印窗口出現
         time.sleep(2)
-        # 模擬鍵盤操作確認打印 (Enter)
-        pyautogui.press('enter')
-
-        # 删除临时文件
-        time.sleep(1)  # 等待打印完成
-        os.remove(temp_html_path)
+        # 模擬鍵盤操作觸發打印 (Ctrl+P)
+        pyautogui.hotkey('ctrl', 'p')
 
 
     # 按鈕
