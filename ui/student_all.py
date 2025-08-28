@@ -17,7 +17,7 @@ def student_all(content):
     
     clear_frame(content)
 
-    student_all = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
+    student_all = frame(content)
     student_all.columnconfigure(0, weight=1)
     student_all.columnconfigure(1, weight=1)
     student_all.columnconfigure(2, weight=1)
