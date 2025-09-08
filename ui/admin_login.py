@@ -6,12 +6,14 @@ from .menu_list import menu_list
 from ui.admin_register import admin_register
 from models.admin import login_validation
 from .menu_list import menu_list
+import customtkinter as ctk
 
 
 def admin_login(menu,content):
     clear_frame(content)
     
-    admin_login = frame(content)
+    # admin_login = frame(content)
+    admin_login = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     admin_login.columnconfigure(0, weight=1)
     admin_login.columnconfigure(1, weight=1)
     admin_login.columnconfigure(2, weight=2)

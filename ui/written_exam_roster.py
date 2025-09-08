@@ -22,7 +22,8 @@ def written_exam_roster(content):
     current_driving_test_number = 0 # 每次載入介面時，考試號碼歸零
     clear_frame(content)
 
-    written_exam_roster = frame(content)
+    # written_exam_roster = frame(content)
+    written_exam_roster = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     written_exam_roster.columnconfigure(0, weight=1)
     written_exam_roster.columnconfigure(1, weight=1)
     written_exam_roster.columnconfigure(2, weight=1)

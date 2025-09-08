@@ -3,12 +3,14 @@ from tkinter import messagebox
 from utils.config import *
 from utils.widget import *
 from models.admin import register_insert_data
+import customtkinter as ctk
 
 
 def admin_register(menu, content):
     clear_frame(content)
     
-    admin_register = frame(content)
+    # admin_register = frame(content)
+    admin_register = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     admin_register.columnconfigure(0, weight=1)
     admin_register.columnconfigure(1, weight=1)
     admin_register.columnconfigure(2, weight=2)

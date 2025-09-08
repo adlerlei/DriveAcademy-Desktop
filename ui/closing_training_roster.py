@@ -22,7 +22,8 @@ current_choice = None
 def closing_training_roster(content):
     clear_frame(content)
     
-    closing_training_roster = frame(content)
+    # closing_training_roster = frame(content)
+    closing_training_roster = ctk.CTkFrame(content, fg_color="#fdfdff")
     closing_training_roster.columnconfigure(0, weight=1)
     closing_training_roster.columnconfigure(1, weight=1)
     closing_training_roster.columnconfigure(2, weight=1)

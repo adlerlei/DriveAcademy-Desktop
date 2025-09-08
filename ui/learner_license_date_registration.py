@@ -11,7 +11,8 @@ current_student_id = None
 def learner_license_date_registration(content):
     clear_frame(content)
         
-    learner_license_date_registration = frame(content)
+    # learner_license_date_registration = frame(content)
+    learner_license_date_registration = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     learner_license_date_registration.columnconfigure(0, weight=1)
     learner_license_date_registration.columnconfigure(1, weight=1)
     learner_license_date_registration.columnconfigure(2, weight=1)

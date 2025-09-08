@@ -11,7 +11,8 @@ current_student_id = None
 def learner_license_submission(content):
     clear_frame(content)
     
-    learner_license_submission = frame(content)
+    # learner_license_submission = frame(content)
+    learner_license_submission = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     learner_license_submission.columnconfigure(0, weight=1)
     learner_license_submission.columnconfigure(1, weight=1)
     learner_license_submission.columnconfigure(2, weight=1)
