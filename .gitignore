@@ -136,3 +136,11 @@ cython_debug/
 
 # VS Code 设置
 .vscode/settings.json
+.kiro
+.qodo
+.vscode
+CTM3
+db/addcsv.csv
+db/annual-plan.csv
+db/instructor.csv
+db/student.csv

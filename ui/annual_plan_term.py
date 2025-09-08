@@ -1,13 +1,15 @@
 # 年度期別計畫 介面
 from utils.widget import *
 from utils.config import *
+import customtkinter as ctk
 from tkinter import messagebox
 from models.annual_plan import insert_annual_plan_data, fetch_and_populate_treeview, export_selected_data, delete_btn_click
 
 def annual_plan_term(content):
     clear_frame(content)
     
-    annual_plan_term = frame(content)
+    # annual_plan_term = frame(content)
+    annual_plan_term = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     annual_plan_term.columnconfigure(0, weight=1)
     annual_plan_term.columnconfigure(1, weight=1)
     annual_plan_term.columnconfigure(2, weight=1)
