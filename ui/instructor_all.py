@@ -11,7 +11,8 @@ current_instructor_number = None
 def instructor_all(content):
     clear_frame(content)
 
-    instructor_all = frame(content)
+    # instructor_all = frame(content)
+    instructor_all = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     instructor_all.columnconfigure(0, weight=1)
     instructor_all.columnconfigure(1, weight=1)
     instructor_all.columnconfigure(2, weight=1)

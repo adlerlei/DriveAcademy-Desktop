@@ -22,7 +22,8 @@ def  road_test_roster(content):
     current_driving_test_number = 0 # 每次載入界面時，考試號碼歸零
     clear_frame(content)
 
-    road_test_roster = frame(content)
+    # road_test_roster = frame(content)
+    road_test_roster = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     road_test_roster.columnconfigure(0, weight=1)
     road_test_roster.columnconfigure(1, weight=1)
     road_test_roster.columnconfigure(2, weight=1)

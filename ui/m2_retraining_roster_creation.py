@@ -23,7 +23,8 @@ global data_list
 def m2_retraining_roster_creation(content):
     global data_list  # 在函数开始处添加这行
     
-    m2_retraining_roster_creation = frame(content)
+    # m2_retraining_roster_creation = frame(content)
+    m2_retraining_roster_creation = ctk.CTkScrollableFrame(content, fg_color="#fdfdff")
     m2_retraining_roster_creation.columnconfigure(0, weight=1)
     m2_retraining_roster_creation.columnconfigure(1, weight=1)
     m2_retraining_roster_creation.columnconfigure(2, weight=1)
