@@ -27,15 +27,15 @@ def learner_license_date_registration(content):
 
     # 顯示 / 搜尋 學員編號
     label(learner_license_date_registration, text='學員編號').grid(row=0, column=0, sticky='ws', padx=(10,0), pady=(10,0))
-    student_number = entry(learner_license_date_registration, placeholder_text=" 🔎")
+    student_number = entry(learner_license_date_registration, placeholder_text="編號查詢")
     student_number.grid(row=1, column=0, sticky='wen', padx=(10,0))
     student_number.bind("<KeyRelease>", lambda event: check_and_populate('student_number', student_number.get()))
 
     # 顯示 / 搜尋 學員姓名
     label(learner_license_date_registration, text='學員姓名').grid(row=0, column=1, sticky='ws', padx=(10,0), pady=(10,0))
-    student_name = entry(learner_license_date_registration, placeholder_text=" 🔎")
+    student_name = entry(learner_license_date_registration, placeholder_text="姓名查詢")
     student_name.grid(row=1, column=1, sticky='wen', padx=(10,0))
-    student_name.bind("<KeyRelease>", lambda event: check_and_populate('student_name', student_name.get()))
+    student_name.bind("<KeyRelease>", lambda event: populate_student_data('student_name', student_name.get()))
 
     # 顯示考照類別
     label(learner_license_date_registration, text='考照類別').grid(row=0, column=2, sticky='ws', padx=(10,0), pady=(10,0))
@@ -46,15 +46,15 @@ def learner_license_date_registration(content):
 
     # 顯示 / 搜尋 學員身分證號碼
     label(learner_license_date_registration, text='身分證號').grid(row=2, column=0, sticky='ws', padx=(10,0), pady=(10,0))
-    national_id_no = entry(learner_license_date_registration, placeholder_text=" 🔎")
+    national_id_no = entry(learner_license_date_registration, placeholder_text="身分證查詢")
     national_id_no.grid(row=3, column=0, sticky='wen', padx=(10,0))
-    national_id_no.bind("<KeyRelease>", lambda event: check_and_populate('national_id_no', national_id_no.get()))
+    national_id_no.bind("<KeyRelease>", lambda event: populate_student_data('national_id_no', national_id_no.get()))
 
     # 顯示聯絡手機
     label(learner_license_date_registration, text='聯絡手機').grid(row=2, column=1, sticky='ws', padx=(10,0), pady=(10,0))
-    mobile_phone = entry(learner_license_date_registration, placeholder_text=" 🔎")
+    mobile_phone = entry(learner_license_date_registration, placeholder_text="手機查詢")
     mobile_phone.grid(row=3, column=1, sticky='wen', padx=(10,0))
-    mobile_phone.bind("<KeyRelease>", lambda event: check_and_populate('mobile_phone', mobile_phone.get()))
+    mobile_phone.bind("<KeyRelease>", lambda event: populate_student_data('mobile_phone', mobile_phone.get()))
 
     # 顯示學員出生日期
     label(learner_license_date_registration, text='出生日期').grid(row=2, column=2, sticky='ws', padx=(10,0), pady=(10,0))
