@@ -5,6 +5,7 @@ build/
 
 # 環境設定
 .env
+venv
 
 # 依賴包
 node_modules/
