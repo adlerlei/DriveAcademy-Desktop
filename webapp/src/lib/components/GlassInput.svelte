@@ -35,13 +35,11 @@
         id={inputId}
         bind:value
         class="
-			h-10 w-full px-4
-			glass rounded-lg
-			text-charcoal-800 placeholder:text-charcoal-600/50
-			transition-all duration-[var(--duration-normal)] ease-[var(--ease-smooth)]
-			focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:ring-offset-2 focus:ring-offset-ivory-50
-			disabled:opacity-50 disabled:cursor-not-allowed
-			{error ? 'ring-2 ring-coral-400/50' : 'border border-charcoal-800/10'}
+			h-10 w-full px-4 rounded-lg
+			glass-input
+			text-charcoal-800
+			focus:outline-none
+			{error ? 'ring-2 ring-coral-400/50 !border-coral-400' : ''}
 		"
         {...restProps}
     />
