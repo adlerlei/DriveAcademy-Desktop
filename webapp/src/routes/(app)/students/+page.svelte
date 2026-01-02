@@ -27,16 +27,6 @@
 
     const batches = ["A", "B"];
     const genders = ["男", "女"];
-    const educations = [
-        "學前教育",
-        "國小",
-        "國中",
-        "高中",
-        "專科",
-        "大學",
-        "碩士",
-        "博士",
-    ];
 
     const addressData = [
         { zip_code: "100", city: "台北市中正區" },
@@ -56,11 +46,8 @@
     let isEditing = $state(false);
     let currentStudentId = $state<number | null>(null);
 
-    // ========== 查詢欄位 ==========
-    let searchStudentNumber = $state("");
-    let searchStudentName = $state("");
-    let searchNationalId = $state("");
-    let searchMobilePhone = $state("");
+    // ========== 查詢欄位（單一輸入）==========
+    let searchQuery = $state("");
 
     // ========== 學員基本資料（可編輯）==========
     let trainingTypeCode = $state("");
@@ -78,7 +65,6 @@
     let rAddress = $state("");
     let homePhone = $state("");
     let gender = $state("");
-    let education = $state("");
     let instructorNumber = $state("");
     let instructorName = $state("");
     let email = $state("");
@@ -166,12 +152,12 @@
         instructorNumber = found?.number || "";
     }
 
-    // ========== 查詢功能 ==========
-    async function searchStudent(field: string, value: string) {
-        if (!value.trim()) return;
+    // ========== 查詢功能（單一輸入搜尋）==========
+    async function searchStudent() {
+        if (!searchQuery.trim()) return;
         try {
             const res = await fetch(
-                `/api/students?search=${encodeURIComponent(value)}`,
+                `/api/students?search=${encodeURIComponent(searchQuery)}`,
             );
             if (res.ok) {
                 const data = await res.json();
@@ -204,7 +190,6 @@
         rAddress = student.r_address || "";
         homePhone = student.home_phone || "";
         gender = student.gender || "";
-        education = student.education || "";
         instructorNumber = student.instructor_number || "";
         instructorName = student.instructor_name || "";
         email = student.email || "";
@@ -223,6 +208,7 @@
     function clearForm() {
         isEditing = false;
         currentStudentId = null;
+        searchQuery = "";
         trainingTypeCode = "";
         trainingTypeName = "";
         licenseTypeCode = "";
@@ -238,7 +224,6 @@
         rAddress = "";
         homePhone = "";
         gender = "";
-        education = "";
         instructorNumber = "";
         instructorName = "";
         email = "";
@@ -252,10 +237,6 @@
         learnerPermitNumber = "";
         roadTestDate = "";
         createdAt = "";
-        searchStudentNumber = "";
-        searchStudentName = "";
-        searchNationalId = "";
-        searchMobilePhone = "";
     }
 
     async function handleAdd() {
@@ -279,7 +260,6 @@
             r_address: rAddress,
             home_phone: homePhone,
             gender,
-            education,
             instructor_number: instructorNumber,
             instructor_name: instructorName,
             email,
@@ -326,7 +306,6 @@
             r_address: rAddress,
             home_phone: homePhone,
             gender,
-            education,
             instructor_number: instructorNumber,
             instructor_name: instructorName,
             email,
@@ -384,43 +363,31 @@
         </p>
     </div>
 
-    <!-- 查詢區塊 -->
+    <!-- 查詢區塊（單一搜尋欄位）-->
     <GlassCard>
-        <h2 class="text-lg font-semibold text-charcoal-800 mb-3">
-            🔍 查詢學員
-        </h2>
-        <p class="text-sm text-charcoal-600 mb-4">
-            輸入任一欄位後按 Enter 查詢
-        </p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <GlassInput
-                label="學員編號"
-                bind:value={searchStudentNumber}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("student_number", searchStudentNumber)}
-            />
-            <GlassInput
-                label="學員姓名"
-                bind:value={searchStudentName}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("student_name", searchStudentName)}
-            />
-            <GlassInput
-                label="身分證號"
-                bind:value={searchNationalId}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("national_id_no", searchNationalId)}
-            />
-            <GlassInput
-                label="手機"
-                bind:value={searchMobilePhone}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("mobile_phone", searchMobilePhone)}
-            />
+        <div class="flex items-center gap-4">
+            <div class="flex-1">
+                <GlassInput
+                    placeholder="輸入學號、姓名或身分證字號搜尋..."
+                    bind:value={searchQuery}
+                    onkeydown={(e) => e.key === "Enter" && searchStudent()}
+                />
+            </div>
+            <GlassButton variant="primary" onclick={searchStudent}>
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    /></svg
+                >
+                搜尋
+            </GlassButton>
         </div>
     </GlassCard>
 
@@ -443,26 +410,37 @@
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
             >
-                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"
-                ></span>訓練分類
+                <svg
+                    class="w-4 h-4 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    /></svg
+                >
+                訓練分類
             </h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <div class="flex flex-col gap-1.5">
+            <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >班別代碼</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         value={trainingTypeCode}
                         onchange={handleTrainingCodeChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each trainingTypes as t}<option value={t.code}
                                 >{t.code}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5 md:col-span-2">
+                <div class="col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >訓練班別</label
                     >
@@ -471,28 +449,28 @@
                         value={trainingTypeName}
                         onchange={handleTrainingNameChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">選擇班別</option>
                         {#each trainingTypes as t}<option value={t.name}
                                 >{t.name}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >考照代碼</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         value={licenseTypeCode}
                         onchange={handleLicenseCodeChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each licenseTypes as t}<option value={t.code}
                                 >{t.code}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5 md:col-span-2">
+                <div class="col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >考照類別</label
                     >
@@ -501,7 +479,7 @@
                         value={licenseTypeName}
                         onchange={handleLicenseNameChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">選擇類別</option>
                         {#each licenseTypes as t}<option value={t.name}
                                 >{t.name}</option
                             >{/each}
@@ -515,20 +493,35 @@
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
             >
-                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"
-                ></span>個人資料
+                <svg
+                    class="w-4 h-4 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    /></svg
+                >
+                個人資料
             </h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <GlassInput label="學員編號" bind:value={studentNumber} />
-                <div class="flex flex-col gap-1.5">
+            <div class="grid grid-cols-12 gap-3">
+                <GlassInput
+                    label="學員編號"
+                    bind:value={studentNumber}
+                    class="col-span-3"
+                />
+                <div class="col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >梯次</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         bind:value={batch}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each batches as b}<option value={b}>{b}</option
                             >{/each}
                     </select>
@@ -536,60 +529,48 @@
                 <GlassInput
                     label="姓名"
                     bind:value={studentName}
-                    class="md:col-span-2"
+                    class="col-span-3"
                 />
                 <GlassInput
                     label="身分證號"
                     bind:value={nationalIdNo}
-                    class="md:col-span-2"
+                    class="col-span-3"
                 />
-                <GlassInput
-                    label="出生日期"
-                    type="date"
-                    bind:value={birthDate}
-                />
-                <div class="flex flex-col gap-1.5">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >性別</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         bind:value={gender}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each genders as g}<option value={g}>{g}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5 md:col-span-2">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >學歷</label
-                    >
-                    <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
-                        bind:value={education}
-                    >
-                        <option value="">選擇</option>
-                        {#each educations as e}<option value={e}>{e}</option
-                            >{/each}
-                    </select>
-                </div>
-                <div class="flex flex-col gap-1.5">
+                <GlassInput
+                    label="出生日期"
+                    type="date"
+                    bind:value={birthDate}
+                    class="col-span-3"
+                />
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >教練編號</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         value={instructorNumber}
                         onchange={handleInstructorNumberChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each instructors as i}<option value={i.number}
                                 >{i.number}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5">
+                <div class="col-span-3 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >教練姓名</label
                     >
@@ -598,7 +579,7 @@
                         value={instructorName}
                         onchange={handleInstructorNameChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">選擇教練</option>
                         {#each instructors as i}<option value={i.name}
                                 >{i.name}</option
                             >{/each}
@@ -612,17 +593,36 @@
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
             >
-                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"
-                ></span>聯絡資訊
+                <svg
+                    class="w-4 h-4 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    /></svg
+                >
+                聯絡資訊
             </h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <GlassInput label="手機" bind:value={mobilePhone} />
-                <GlassInput label="室內電話" bind:value={homePhone} />
+            <div class="grid grid-cols-12 gap-3">
+                <GlassInput
+                    label="手機"
+                    bind:value={mobilePhone}
+                    class="col-span-3"
+                />
+                <GlassInput
+                    label="室內電話"
+                    bind:value={homePhone}
+                    class="col-span-3"
+                />
                 <GlassInput
                     label="電子郵件"
                     type="email"
                     bind:value={email}
-                    class="md:col-span-2 lg:col-span-4"
+                    class="col-span-6"
                 />
             </div>
         </div>
@@ -632,26 +632,37 @@
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
             >
-                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"
-                ></span>戶籍地址
+                <svg
+                    class="w-4 h-4 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    /></svg
+                >
+                戶籍地址
             </h3>
-            <div class="grid grid-cols-6 gap-3">
-                <div class="flex flex-col gap-1.5">
+            <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         value={rAddressZipCode}
                         onchange={handleRZipCodeChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each addressData as a}<option value={a.zip_code}
                                 >{a.zip_code}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5 col-span-2">
+                <div class="col-span-3 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >縣市區</label
                     >
@@ -669,7 +680,7 @@
                 <GlassInput
                     label="詳細地址"
                     bind:value={rAddress}
-                    class="col-span-3"
+                    class="col-span-7"
                 />
             </div>
         </div>
@@ -679,26 +690,42 @@
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
             >
-                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"
-                ></span>通訊地址
+                <svg
+                    class="w-4 h-4 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    /><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    /></svg
+                >
+                通訊地址
             </h3>
-            <div class="grid grid-cols-6 gap-3">
-                <div class="flex flex-col gap-1.5">
+            <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
                         value={mAddressZipCode}
                         onchange={handleMZipCodeChange}
                     >
-                        <option value="">選擇</option>
+                        <option value="">-</option>
                         {#each addressData as a}<option value={a.zip_code}
                                 >{a.zip_code}</option
                             >{/each}
                     </select>
                 </div>
-                <div class="flex flex-col gap-1.5 col-span-2">
+                <div class="col-span-3 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >縣市區</label
                     >
@@ -716,7 +743,7 @@
                 <GlassInput
                     label="詳細地址"
                     bind:value={mAddress}
-                    class="col-span-3"
+                    class="col-span-7"
                 />
             </div>
         </div>
@@ -726,7 +753,19 @@
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
             >
-                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>其他
+                <svg
+                    class="w-4 h-4 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+                    /></svg
+                >
+                其他
             </h3>
             <GlassInput label="備註" bind:value={remarks} />
         </div>
