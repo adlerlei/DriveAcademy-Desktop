@@ -82,6 +82,23 @@
     let roadTestDate = $state("");
     let createdAt = $state("");
 
+    // ========== 學員編號自動格式化 (xxx-xxx) ==========
+    function formatStudentNumber(value: string): string {
+        const digits = value.replace(/[^0-9]/g, ""); // 只保留數字
+        if (digits.length > 3) {
+            return digits.slice(0, 3) + "-" + digits.slice(3, 6);
+        }
+        return digits;
+    }
+
+    function handleStudentNumberInput(e: Event) {
+        const input = e.target as HTMLInputElement;
+        const formatted = formatStudentNumber(input.value);
+        studentNumber = formatted;
+        // 更新輸入框顯示值
+        input.value = formatted;
+    }
+
     // ========== 整合下拉選單處理 ==========
     function handleTrainingTypeChange(e: Event) {
         const code = (e.target as HTMLSelectElement).value;
@@ -455,11 +472,19 @@
                 個人資料
             </h3>
             <div class="grid grid-cols-12 gap-3">
-                <GlassInput
-                    label="學員編號"
-                    bind:value={studentNumber}
-                    class="col-span-3"
-                />
+                <div class="col-span-3 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
+                        >學員編號</label
+                    >
+                    <input
+                        type="text"
+                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
+                        placeholder="xxx-xxx"
+                        maxlength="7"
+                        value={studentNumber}
+                        oninput={handleStudentNumberInput}
+                    />
+                </div>
                 <GlassInput
                     label="姓名"
                     bind:value={studentName}
