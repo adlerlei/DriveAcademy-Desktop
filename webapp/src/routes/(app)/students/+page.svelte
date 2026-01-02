@@ -2,7 +2,7 @@
     import { GlassCard, GlassButton, GlassInput } from "$lib/components";
     import { t } from "$lib/i18n";
 
-    // ========== 固定資料 ==========
+    // ========== 固定資料（整合顯示格式）==========
     const trainingTypes = [
         { code: "1", name: "普通小型車班" },
         { code: "2", name: "大貨車班" },
@@ -46,10 +46,11 @@
     let isEditing = $state(false);
     let currentStudentId = $state<number | null>(null);
 
-    // ========== 查詢欄位（單一輸入）==========
+    // ========== 查詢欄位 ==========
     let searchQuery = $state("");
 
-    // ========== 學員基本資料（可編輯）==========
+    // ========== 學員基本資料 ==========
+    // 存儲時拆分為 code + name，但 UI 使用整合值
     let trainingTypeCode = $state("");
     let trainingTypeName = $state("");
     let licenseTypeCode = $state("");
@@ -81,78 +82,41 @@
     let roadTestDate = $state("");
     let createdAt = $state("");
 
-    // ========== 連動下拉邏輯 ==========
-    function handleTrainingCodeChange(e: Event) {
+    // ========== 整合下拉選單處理 ==========
+    function handleTrainingTypeChange(e: Event) {
         const code = (e.target as HTMLSelectElement).value;
         trainingTypeCode = code;
         const found = trainingTypes.find((t) => t.code === code);
         trainingTypeName = found?.name || "";
     }
 
-    function handleTrainingNameChange(e: Event) {
-        const name = (e.target as HTMLSelectElement).value;
-        trainingTypeName = name;
-        const found = trainingTypes.find((t) => t.name === name);
-        trainingTypeCode = found?.code || "";
-    }
-
-    function handleLicenseCodeChange(e: Event) {
+    function handleLicenseTypeChange(e: Event) {
         const code = (e.target as HTMLSelectElement).value;
         licenseTypeCode = code;
         const found = licenseTypes.find((t) => t.code === code);
         licenseTypeName = found?.name || "";
     }
 
-    function handleLicenseNameChange(e: Event) {
-        const name = (e.target as HTMLSelectElement).value;
-        licenseTypeName = name;
-        const found = licenseTypes.find((t) => t.name === name);
-        licenseTypeCode = found?.code || "";
-    }
-
-    function handleRZipCodeChange(e: Event) {
-        const zip = (e.target as HTMLSelectElement).value;
-        rAddressZipCode = zip;
-        const found = addressData.find((a) => a.zip_code === zip);
-        rAddressCity = found?.city || "";
-    }
-
-    function handleRCityChange(e: Event) {
-        const city = (e.target as HTMLSelectElement).value;
-        rAddressCity = city;
-        const found = addressData.find((a) => a.city === city);
-        rAddressZipCode = found?.zip_code || "";
-    }
-
-    function handleMZipCodeChange(e: Event) {
-        const zip = (e.target as HTMLSelectElement).value;
-        mAddressZipCode = zip;
-        const found = addressData.find((a) => a.zip_code === zip);
-        mAddressCity = found?.city || "";
-    }
-
-    function handleMCityChange(e: Event) {
-        const city = (e.target as HTMLSelectElement).value;
-        mAddressCity = city;
-        const found = addressData.find((a) => a.city === city);
-        mAddressZipCode = found?.zip_code || "";
-    }
-
-    function handleInstructorNumberChange(e: Event) {
+    function handleInstructorChange(e: Event) {
         const num = (e.target as HTMLSelectElement).value;
         instructorNumber = num;
         const found = instructors.find((i) => i.number === num);
         instructorName = found?.name || "";
     }
 
-    function handleInstructorNameChange(e: Event) {
-        const name = (e.target as HTMLSelectElement).value;
-        instructorName = name;
-        const found = instructors.find((i) => i.name === name);
-        instructorNumber = found?.number || "";
+    function handleAddressChange(type: "r" | "m", e: Event) {
+        const zip = (e.target as HTMLSelectElement).value;
+        const found = addressData.find((a) => a.zip_code === zip);
+        if (type === "r") {
+            rAddressZipCode = zip;
+            rAddressCity = found?.city || "";
+        } else {
+            mAddressZipCode = zip;
+            mAddressCity = found?.city || "";
+        }
     }
 
-    // ========== 查詢功能（單一輸入搜尋）==========
+    // ========== 查詢功能 ==========
     async function searchStudent() {
         if (!searchQuery.trim()) return;
         try {
@@ -363,7 +327,7 @@
         </p>
     </div>
 
-    <!-- 查詢區塊（單一搜尋欄位）-->
+    <!-- 查詢區塊 -->
     <GlassCard>
         <div class="flex items-center gap-4">
             <div class="flex-1">
@@ -405,7 +369,7 @@
             {/if}
         </div>
 
-        <!-- 訓練類別 -->
+        <!-- 訓練類別（整合下拉選單）-->
         <div class="mb-6">
             <h3
                 class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
@@ -425,63 +389,46 @@
                 訓練分類
             </h3>
             <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-2 flex flex-col gap-1.5">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >班別代碼</label
-                    >
-                    <select
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
-                        value={trainingTypeCode}
-                        onchange={handleTrainingCodeChange}
-                    >
-                        <option value="">-</option>
-                        {#each trainingTypes as t}<option value={t.code}
-                                >{t.code}</option
-                            >{/each}
-                    </select>
-                </div>
-                <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="col-span-5 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >訓練班別</label
                     >
                     <select
                         class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={trainingTypeName}
-                        onchange={handleTrainingNameChange}
+                        value={trainingTypeCode}
+                        onchange={handleTrainingTypeChange}
                     >
-                        <option value="">選擇班別</option>
-                        {#each trainingTypes as t}<option value={t.name}
-                                >{t.name}</option
-                            >{/each}
+                        <option value="">請選擇訓練班別</option>
+                        {#each trainingTypes as t}
+                            <option value={t.code}>{t.code} - {t.name}</option>
+                        {/each}
                     </select>
                 </div>
-                <div class="col-span-2 flex flex-col gap-1.5">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >考照代碼</label
-                    >
-                    <select
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
-                        value={licenseTypeCode}
-                        onchange={handleLicenseCodeChange}
-                    >
-                        <option value="">-</option>
-                        {#each licenseTypes as t}<option value={t.code}
-                                >{t.code}</option
-                            >{/each}
-                    </select>
-                </div>
-                <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="col-span-5 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >考照類別</label
                     >
                     <select
                         class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={licenseTypeName}
-                        onchange={handleLicenseNameChange}
+                        value={licenseTypeCode}
+                        onchange={handleLicenseTypeChange}
                     >
-                        <option value="">選擇類別</option>
-                        {#each licenseTypes as t}<option value={t.name}
-                                >{t.name}</option
+                        <option value="">請選擇考照類別</option>
+                        {#each licenseTypes as t}
+                            <option value={t.code}>{t.code} - {t.name}</option>
+                        {/each}
+                    </select>
+                </div>
+                <div class="col-span-2 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
+                        >梯次</label
+                    >
+                    <select
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
+                        bind:value={batch}
+                    >
+                        <option value="">-</option>
+                        {#each batches as b}<option value={b}>{b}</option
                             >{/each}
                     </select>
                 </div>
@@ -513,19 +460,6 @@
                     bind:value={studentNumber}
                     class="col-span-3"
                 />
-                <div class="col-span-1 flex flex-col gap-1.5">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >梯次</label
-                    >
-                    <select
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
-                        bind:value={batch}
-                    >
-                        <option value="">-</option>
-                        {#each batches as b}<option value={b}>{b}</option
-                            >{/each}
-                    </select>
-                </div>
                 <GlassInput
                     label="姓名"
                     bind:value={studentName}
@@ -536,7 +470,7 @@
                     bind:value={nationalIdNo}
                     class="col-span-3"
                 />
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >性別</label
                     >
@@ -553,36 +487,23 @@
                     label="出生日期"
                     type="date"
                     bind:value={birthDate}
-                    class="col-span-3"
+                    class="col-span-2"
                 />
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
-                        >教練編號</label
-                    >
-                    <select
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
-                        value={instructorNumber}
-                        onchange={handleInstructorNumberChange}
-                    >
-                        <option value="">-</option>
-                        {#each instructors as i}<option value={i.number}
-                                >{i.number}</option
-                            >{/each}
-                    </select>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1.5">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >教練姓名</label
+                        >指導教練</label
                     >
                     <select
                         class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={instructorName}
-                        onchange={handleInstructorNameChange}
+                        value={instructorNumber}
+                        onchange={handleInstructorChange}
                     >
-                        <option value="">選擇教練</option>
-                        {#each instructors as i}<option value={i.name}
-                                >{i.name}</option
-                            >{/each}
+                        <option value="">請選擇教練</option>
+                        {#each instructors as i}
+                            <option value={i.number}
+                                >{i.number} - {i.name}</option
+                            >
+                        {/each}
                     </select>
                 </div>
             </div>
@@ -647,40 +568,27 @@
                 戶籍地址
             </h3>
             <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
-                        >郵遞區號</label
-                    >
-                    <select
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
-                        value={rAddressZipCode}
-                        onchange={handleRZipCodeChange}
-                    >
-                        <option value="">-</option>
-                        {#each addressData as a}<option value={a.zip_code}
-                                >{a.zip_code}</option
-                            >{/each}
-                    </select>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1.5">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >縣市區</label
+                        >郵遞區號 / 縣市區</label
                     >
                     <select
                         class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={rAddressCity}
-                        onchange={handleRCityChange}
+                        value={rAddressZipCode}
+                        onchange={(e) => handleAddressChange("r", e)}
                     >
-                        <option value="">選擇</option>
-                        {#each addressData as a}<option value={a.city}
-                                >{a.city}</option
-                            >{/each}
+                        <option value="">選擇區域</option>
+                        {#each addressData as a}
+                            <option value={a.zip_code}
+                                >{a.zip_code} - {a.city}</option
+                            >
+                        {/each}
                     </select>
                 </div>
                 <GlassInput
                     label="詳細地址"
                     bind:value={rAddress}
-                    class="col-span-7"
+                    class="col-span-8"
                 />
             </div>
         </div>
@@ -710,40 +618,27 @@
                 通訊地址
             </h3>
             <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
-                        >郵遞區號</label
-                    >
-                    <select
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
-                        value={mAddressZipCode}
-                        onchange={handleMZipCodeChange}
-                    >
-                        <option value="">-</option>
-                        {#each addressData as a}<option value={a.zip_code}
-                                >{a.zip_code}</option
-                            >{/each}
-                    </select>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1.5">
-                    <label class="text-sm font-medium text-charcoal-700"
-                        >縣市區</label
+                        >郵遞區號 / 縣市區</label
                     >
                     <select
                         class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={mAddressCity}
-                        onchange={handleMCityChange}
+                        value={mAddressZipCode}
+                        onchange={(e) => handleAddressChange("m", e)}
                     >
-                        <option value="">選擇</option>
-                        {#each addressData as a}<option value={a.city}
-                                >{a.city}</option
-                            >{/each}
+                        <option value="">選擇區域</option>
+                        {#each addressData as a}
+                            <option value={a.zip_code}
+                                >{a.zip_code} - {a.city}</option
+                            >
+                        {/each}
                     </select>
                 </div>
                 <GlassInput
                     label="詳細地址"
                     bind:value={mAddress}
-                    class="col-span-7"
+                    class="col-span-8"
                 />
             </div>
         </div>
