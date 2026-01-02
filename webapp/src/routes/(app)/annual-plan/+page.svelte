@@ -233,18 +233,8 @@
                             >{/each}
                     </select>
                 </div>
-                <GlassInput
-                    label="期別"
-                    placeholder="01"
-                    bind:value={term}
-                    class="col-span-2"
-                />
-                <GlassInput
-                    label="年度"
-                    placeholder="113"
-                    bind:value={year}
-                    class="col-span-3"
-                />
+                <GlassInput label="期別" bind:value={term} class="col-span-2" />
+                <GlassInput label="年度" bind:value={year} class="col-span-3" />
             </div>
         </div>
 
