@@ -72,7 +72,7 @@
                     </h2>
                     <button
                         onclick={onClose}
-                        class="w-8 h-8 rounded-lg flex items-center justify-center text-charcoal-600 hover:bg-charcoal-800/5 transition-colors"
+                        class="w-8 h-8 rounded-md flex items-center justify-center text-charcoal-600 hover:bg-charcoal-800/5 transition-colors"
                         aria-label="關閉"
                     >
                         <svg

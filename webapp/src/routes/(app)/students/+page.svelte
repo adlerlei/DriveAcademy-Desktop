@@ -430,7 +430,7 @@
                         >班別代碼</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         value={trainingTypeCode}
                         onchange={handleTrainingCodeChange}
                     >
@@ -445,7 +445,7 @@
                         >訓練班別</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                         value={trainingTypeName}
                         onchange={handleTrainingNameChange}
                     >
@@ -460,7 +460,7 @@
                         >考照代碼</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         value={licenseTypeCode}
                         onchange={handleLicenseCodeChange}
                     >
@@ -475,7 +475,7 @@
                         >考照類別</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                         value={licenseTypeName}
                         onchange={handleLicenseNameChange}
                     >
@@ -518,7 +518,7 @@
                         >梯次</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         bind:value={batch}
                     >
                         <option value="">-</option>
@@ -541,7 +541,7 @@
                         >性別</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         bind:value={gender}
                     >
                         <option value="">-</option>
@@ -560,7 +560,7 @@
                         >教練編號</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         value={instructorNumber}
                         onchange={handleInstructorNumberChange}
                     >
@@ -575,7 +575,7 @@
                         >教練姓名</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                         value={instructorName}
                         onchange={handleInstructorNameChange}
                     >
@@ -652,7 +652,7 @@
                         >郵遞區號</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         value={rAddressZipCode}
                         onchange={handleRZipCodeChange}
                     >
@@ -667,7 +667,7 @@
                         >縣市區</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                         value={rAddressCity}
                         onchange={handleRCityChange}
                     >
@@ -715,7 +715,7 @@
                         >郵遞區號</label
                     >
                     <select
-                        class="h-10 w-full px-2 glass-input rounded-lg text-charcoal-800 text-center focus:outline-none"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center focus:outline-none"
                         value={mAddressZipCode}
                         onchange={handleMZipCodeChange}
                     >
@@ -730,7 +730,7 @@
                         >縣市區</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-lg text-charcoal-800 focus:outline-none"
+                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                         value={mAddressCity}
                         onchange={handleMCityChange}
                     >

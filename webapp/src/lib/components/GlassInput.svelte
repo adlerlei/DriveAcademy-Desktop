@@ -35,7 +35,7 @@
         id={inputId}
         bind:value
         class="
-			h-10 w-full px-4 rounded-lg
+			h-10 w-full px-4 rounded-md
 			glass-input
 			text-charcoal-800
 			focus:outline-none

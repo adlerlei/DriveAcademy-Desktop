@@ -247,7 +247,7 @@
                     >路考項目</label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     bind:value={examItem}
                 >
                     <option value="">請選擇</option>
@@ -280,7 +280,7 @@
                 <label class="text-sm font-medium text-charcoal-700">時段</label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     bind:value={printTimeSlot}
                 >
                     <option value="">請選擇</option>

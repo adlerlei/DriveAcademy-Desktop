@@ -315,7 +315,7 @@
                     >教練編號 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     value={instructorNumber}
                     onchange={handleInstructorNumberChange}
                 >
@@ -330,7 +330,7 @@
                     >教練姓名</label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     value={instructorName}
                     onchange={handleInstructorNameChange}
                 >
@@ -347,7 +347,7 @@
                     >手自排代碼 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     value={transmissionCode}
                     onchange={handleTransmissionCodeChange}
                 >
@@ -362,7 +362,7 @@
                     >手自排名稱</label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     value={transmissionName}
                     onchange={handleTransmissionNameChange}
                 >
@@ -379,7 +379,7 @@
                     >退訓 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     bind:value={dropout}
                 >
                     <option value="">請選擇</option>

@@ -21,7 +21,7 @@
 
     const baseStyles = `
 		inline-flex items-center justify-center gap-2
-		font-medium rounded-lg
+		font-medium rounded-md
 		transition-all duration-[var(--duration-normal)] ease-[var(--ease-smooth)]
 		focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:ring-offset-2
 		disabled:opacity-50 disabled:cursor-not-allowed

@@ -215,7 +215,7 @@
                     >訓練班別代碼 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     value={trainingTypeCode}
                     onchange={handleTrainingCodeChange}
                 >
@@ -232,7 +232,7 @@
                     >訓練班別名稱 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     value={trainingTypeName}
                     onchange={handleTrainingNameChange}
                 >
@@ -249,7 +249,7 @@
                     >梯次 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-lg text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     bind:value={batch}
                 >
                     <option value="">請選擇</option>

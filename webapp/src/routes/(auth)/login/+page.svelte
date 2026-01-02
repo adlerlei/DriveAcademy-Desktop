@@ -89,7 +89,7 @@
 
                 {#if error}
                     <div
-                        class="p-3 rounded-lg bg-coral-500/10 border border-coral-500/20 text-coral-600 text-sm"
+                        class="p-3 rounded-md bg-coral-500/10 border border-coral-500/20 text-coral-600 text-sm"
                     >
                         {error}
                     </div>
