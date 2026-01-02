@@ -22,12 +22,10 @@
         { number: "003", name: "張建國" },
     ];
 
-    // ========== 查詢區欄位 ==========
-    let searchStudentNumber = $state("");
-    let searchStudentName = $state("");
-    let searchNationalId = $state("");
+    // ========== 查詢區 ==========
+    let searchQuery = $state("");
 
-    // ========== 學員資料顯示區 ==========
+    // ========== 學員資料 ==========
     let currentStudent = $state<any>(null);
     let birthDate = $state("");
     let gender = $state("");
@@ -35,7 +33,6 @@
     let trainingTypeName = $state("");
     let rAddressZipCode = $state("");
     let rAddressCity = $state("");
-    let rAddress = $state("");
 
     // 可編輯欄位
     let learnerPermitDate = $state("");
@@ -54,55 +51,32 @@
 
     const columns = [
         { key: "register_number", label: "名冊號碼", width: "100px" },
-        { key: "batch", label: "梯次", width: "60px" },
         { key: "student_number", label: "學員編號", width: "100px" },
         { key: "student_name", label: "學員姓名", width: "100px" },
         { key: "dropout", label: "退訓", width: "60px" },
         { key: "transmission_name", label: "手自排", width: "80px" },
         { key: "instructor_name", label: "教練", width: "80px" },
-        { key: "gender", label: "性別", width: "60px" },
-        { key: "birth_date", label: "出生日期", width: "100px" },
-        { key: "national_id_no", label: "身分證號", width: "120px" },
-        { key: "r_address_zip_code", label: "區號", width: "60px" },
-        { key: "r_address", label: "戶籍地址", width: "150px" },
-        { key: "learner_permit_date", label: "學照日期", width: "100px" },
     ];
 
-    // 連動下拉
-    function handleTransmissionCodeChange(e: Event) {
+    // 整合下拉選單
+    function handleTransmissionChange(e: Event) {
         const code = (e.target as HTMLSelectElement).value;
         transmissionCode = code;
-        const found = transmissionTypes.find((t) => t.code === code);
-        transmissionName = found?.name || "";
+        transmissionName =
+            transmissionTypes.find((t) => t.code === code)?.name || "";
     }
 
-    function handleTransmissionNameChange(e: Event) {
-        const name = (e.target as HTMLSelectElement).value;
-        transmissionName = name;
-        const found = transmissionTypes.find((t) => t.name === name);
-        transmissionCode = found?.code || "";
-    }
-
-    function handleInstructorNumberChange(e: Event) {
+    function handleInstructorChange(e: Event) {
         const num = (e.target as HTMLSelectElement).value;
         instructorNumber = num;
-        const found = instructors.find((i) => i.number === num);
-        instructorName = found?.name || "";
+        instructorName = instructors.find((i) => i.number === num)?.name || "";
     }
 
-    function handleInstructorNameChange(e: Event) {
-        const name = (e.target as HTMLSelectElement).value;
-        instructorName = name;
-        const found = instructors.find((i) => i.name === name);
-        instructorNumber = found?.number || "";
-    }
-
-    async function searchStudent(field: string, value: string) {
-        if (!value.trim()) return;
-
+    async function searchStudent() {
+        if (!searchQuery.trim()) return;
         try {
             const res = await fetch(
-                `/api/students?search=${encodeURIComponent(value)}`,
+                `/api/students?search=${encodeURIComponent(searchQuery)}`,
             );
             if (res.ok) {
                 const data = await res.json();
@@ -125,7 +99,6 @@
         trainingTypeName = student.training_type_name || "";
         rAddressZipCode = student.r_address_zip_code || "";
         rAddressCity = student.r_address_city || "";
-        rAddress = student.r_address || "";
         learnerPermitDate = student.learner_permit_date || "";
         registerNumber = student.register_number || "";
         term = student.register_term || "";
@@ -133,16 +106,13 @@
 
     function clearForm() {
         currentStudent = null;
-        searchStudentNumber = "";
-        searchStudentName = "";
-        searchNationalId = "";
+        searchQuery = "";
         birthDate = "";
         gender = "";
         batch = "";
         trainingTypeName = "";
         rAddressZipCode = "";
         rAddressCity = "";
-        rAddress = "";
         learnerPermitDate = "";
         registerNumber = "";
         term = "";
@@ -158,12 +128,10 @@
             alert("請先查詢並選擇一位學員");
             return;
         }
-
         if (!dropout || !transmissionCode || !instructorNumber) {
             alert("請填寫退訓、手自排和教練");
             return;
         }
-
         rosterList = [
             ...rosterList,
             {
@@ -177,7 +145,6 @@
                 dropout,
             },
         ];
-
         alert("已加入結訓名冊！");
         clearForm();
     }
@@ -189,21 +156,12 @@
         }
         alert("匯出功能開發中");
     }
-
-    function handlePrintSchool() {
+    function handlePrint() {
         if (rosterList.length === 0) {
             alert("名冊為空");
             return;
         }
-        alert("列印（駕訓班用）功能開發中");
-    }
-
-    function handlePrintOfficial() {
-        if (rosterList.length === 0) {
-            alert("名冊為空");
-            return;
-        }
-        alert("列印（監理所用）功能開發中");
+        alert("列印功能開發中");
     }
 </script>
 
@@ -215,202 +173,259 @@
         <p class="mt-1 text-charcoal-600">製作學員的結訓名冊，更新結訓狀態</p>
     </div>
 
-    <!-- A. 學員查詢區 -->
+    <!-- 學員查詢 -->
     <GlassCard>
-        <h2 class="text-lg font-semibold text-charcoal-800 mb-4">
-            A. 學員查詢區
+        <h2
+            class="text-lg font-semibold text-charcoal-800 mb-4 flex items-center gap-2"
+        >
+            <svg
+                class="w-5 h-5 text-amber-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                /></svg
+            >
+            學員查詢
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <GlassInput
-                label="學員編號"
-                bind:value={searchStudentNumber}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("student_number", searchStudentNumber)}
-            />
-            <GlassInput
-                label="學員姓名"
-                bind:value={searchStudentName}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("student_name", searchStudentName)}
-            />
-            <GlassInput
-                label="身分證號"
-                bind:value={searchNationalId}
-                onkeydown={(e) =>
-                    e.key === "Enter" &&
-                    searchStudent("national_id_no", searchNationalId)}
-            />
+        <div class="flex items-center gap-4">
+            <div class="flex-1">
+                <GlassInput
+                    placeholder="輸入學員編號、姓名或身分證字號搜尋..."
+                    bind:value={searchQuery}
+                    onkeydown={(e) => e.key === "Enter" && searchStudent()}
+                />
+            </div>
+            <GlassButton variant="primary" onclick={searchStudent}>
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    /></svg
+                >
+                搜尋
+            </GlassButton>
         </div>
     </GlassCard>
 
-    <!-- B. 學員資料顯示區 -->
+    <!-- 學員資料（唯讀）-->
     <GlassCard variant="subtle">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-charcoal-800">
-                B. 學員資料顯示區
+            <h2
+                class="text-lg font-semibold text-charcoal-800 flex items-center gap-2"
+            >
+                <svg
+                    class="w-5 h-5 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    /></svg
+                >
+                學員資料
             </h2>
             {#if currentStudent}
                 <span
-                    class="text-sm text-green-600 bg-green-50 px-2 py-1 rounded"
+                    class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full font-medium"
                     >已選擇：{currentStudent.student_name}</span
                 >
             {/if}
         </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-4">
             <div class="flex flex-col gap-1">
-                <span class="text-sm text-charcoal-600">出生日期</span><span
-                    class="font-medium">{birthDate || "-"}</span
+                <span class="text-sm text-charcoal-500">出生日期</span><span
+                    class="text-charcoal-800 font-medium"
+                    >{birthDate || "-"}</span
                 >
             </div>
             <div class="flex flex-col gap-1">
-                <span class="text-sm text-charcoal-600">性別</span><span
-                    class="font-medium">{gender || "-"}</span
+                <span class="text-sm text-charcoal-500">性別</span><span
+                    class="text-charcoal-800 font-medium">{gender || "-"}</span
                 >
             </div>
             <div class="flex flex-col gap-1">
-                <span class="text-sm text-charcoal-600">梯次</span><span
-                    class="font-medium">{batch || "-"}</span
+                <span class="text-sm text-charcoal-500">梯次</span><span
+                    class="text-charcoal-800 font-medium">{batch || "-"}</span
                 >
             </div>
             <div class="flex flex-col gap-1">
-                <span class="text-sm text-charcoal-600">訓練班別</span><span
-                    class="font-medium">{trainingTypeName || "-"}</span
+                <span class="text-sm text-charcoal-500">訓練班別</span><span
+                    class="text-charcoal-800 font-medium"
+                    >{trainingTypeName || "-"}</span
                 >
             </div>
             <div class="flex flex-col gap-1">
-                <span class="text-sm text-charcoal-600">戶籍地址</span><span
-                    class="font-medium text-sm"
+                <span class="text-sm text-charcoal-500">戶籍區</span><span
+                    class="text-charcoal-800 font-medium"
                     >{rAddressZipCode
                         ? `${rAddressZipCode} ${rAddressCity}`
                         : "-"}</span
                 >
             </div>
         </div>
-
-        <h3 class="text-sm font-semibold text-charcoal-700 mb-2">可編輯欄位</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <h3
+            class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
+        >
+            <svg
+                class="w-4 h-4 text-amber-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                /></svg
+            >
+            可編輯欄位
+        </h3>
+        <div class="grid grid-cols-12 gap-4">
             <GlassInput
                 label="學照日期"
                 type="date"
                 bind:value={learnerPermitDate}
+                class="col-span-4"
             />
-            <GlassInput label="名冊號碼" bind:value={registerNumber} />
-            <GlassInput label="期別" bind:value={term} />
+            <GlassInput
+                label="名冊號碼"
+                bind:value={registerNumber}
+                class="col-span-4"
+            />
+            <GlassInput label="期別" bind:value={term} class="col-span-4" />
         </div>
     </GlassCard>
 
-    <!-- C. 結訓登錄區 -->
+    <!-- 結訓登錄區 -->
     <GlassCard>
-        <h2 class="text-lg font-semibold text-charcoal-800 mb-4">
-            C. 結訓登錄區
+        <h2
+            class="text-lg font-semibold text-charcoal-800 mb-6 flex items-center gap-2"
+        >
+            <svg
+                class="w-5 h-5 text-amber-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                /></svg
+            >
+            結訓登錄
         </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <!-- 指導教練 -->
-            <div class="flex flex-col gap-1.5">
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-4 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
-                    >教練編號 <span class="text-coral-500">*</span></label
+                    >指導教練 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                     value={instructorNumber}
-                    onchange={handleInstructorNumberChange}
+                    onchange={handleInstructorChange}
                 >
-                    <option value="">請選擇</option>
-                    {#each instructors as inst}<option value={inst.number}
-                            >{inst.number}</option
+                    <option value="">請選擇教練</option>
+                    {#each instructors as i}<option value={i.number}
+                            >{i.number} - {i.name}</option
                         >{/each}
                 </select>
             </div>
-            <div class="flex flex-col gap-1.5">
+            <div class="col-span-3 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
-                    >教練姓名</label
+                    >手自排 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
-                    value={instructorName}
-                    onchange={handleInstructorNameChange}
-                >
-                    <option value="">請選擇</option>
-                    {#each instructors as inst}<option value={inst.name}
-                            >{inst.name}</option
-                        >{/each}
-                </select>
-            </div>
-
-            <!-- 手自排 -->
-            <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-medium text-charcoal-700"
-                    >手自排代碼 <span class="text-coral-500">*</span></label
-                >
-                <select
-                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                     value={transmissionCode}
-                    onchange={handleTransmissionCodeChange}
+                    onchange={handleTransmissionChange}
                 >
                     <option value="">請選擇</option>
-                    {#each transmissionTypes as type}<option value={type.code}
-                            >{type.code}</option
+                    {#each transmissionTypes as t}<option value={t.code}
+                            >{t.code} - {t.name}</option
                         >{/each}
                 </select>
             </div>
-            <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-medium text-charcoal-700"
-                    >手自排名稱</label
-                >
-                <select
-                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
-                    value={transmissionName}
-                    onchange={handleTransmissionNameChange}
-                >
-                    <option value="">請選擇</option>
-                    {#each transmissionTypes as type}<option value={type.name}
-                            >{type.name}</option
-                        >{/each}
-                </select>
-            </div>
-
-            <!-- 退訓 -->
-            <div class="flex flex-col gap-1.5 lg:col-span-2">
+            <div class="col-span-2 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
                     >退訓 <span class="text-coral-500">*</span></label
                 >
                 <select
-                    class="h-10 w-full px-4 glass-input rounded-md text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                    class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
                     bind:value={dropout}
                 >
-                    <option value="">請選擇</option>
+                    <option value="">-</option>
                     {#each dropoutOptions as opt}<option value={opt}
                             >{opt}</option
                         >{/each}
                 </select>
             </div>
         </div>
+    </GlassCard>
 
-        <div class="flex flex-wrap gap-3 pt-4 border-t border-charcoal-800/10">
+    <!-- 功能按鈕 -->
+    <GlassCard padding="sm">
+        <div class="flex flex-wrap items-center gap-3">
+            <GlassButton variant="ghost" onclick={clearForm}>
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    /></svg
+                >
+                清除
+            </GlassButton>
+            <div class="w-px h-6 bg-charcoal-200"></div>
             <GlassButton variant="primary" onclick={handleAddToRoster}
                 >加入結訓名冊</GlassButton
             >
             <GlassButton variant="secondary" onclick={handleExport}
-                >匯出文件</GlassButton
+                >匯出</GlassButton
             >
-            <GlassButton variant="secondary" onclick={handlePrintOfficial}
-                >列印結訓名冊（監理所用）</GlassButton
+            <GlassButton variant="secondary" onclick={handlePrint}
+                >列印名冊</GlassButton
             >
-            <GlassButton variant="secondary" onclick={handlePrintSchool}
-                >列印結訓名冊（駕訓班用）</GlassButton
-            >
-            <GlassButton variant="ghost" onclick={clearForm}>清除</GlassButton>
         </div>
     </GlassCard>
 
     <!-- 結訓名冊清單 -->
     <GlassCard padding="none">
         <div class="p-4 border-b border-charcoal-800/10">
-            <h2 class="text-lg font-semibold text-charcoal-800">
+            <h2
+                class="text-lg font-semibold text-charcoal-800 flex items-center gap-2"
+            >
+                <svg
+                    class="w-5 h-5 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                    /></svg
+                >
                 結訓名冊清單
             </h2>
             <p class="text-sm text-charcoal-600 mt-1">
