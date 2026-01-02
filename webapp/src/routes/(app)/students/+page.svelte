@@ -69,7 +69,6 @@
     let instructorNumber = $state("");
     let instructorName = $state("");
     let email = $state("");
-    let remarks = $state("");
     let mAddressZipCode = $state("");
     let mAddressCity = $state("");
     let mAddress = $state("");
@@ -174,7 +173,6 @@
         instructorNumber = student.instructor_number || "";
         instructorName = student.instructor_name || "";
         email = student.email || "";
-        remarks = student.remarks || "";
         mAddressZipCode = student.m_address_zip_code || "";
         mAddressCity = student.m_address_city || "";
         mAddress = student.m_address || "";
@@ -208,7 +206,6 @@
         instructorNumber = "";
         instructorName = "";
         email = "";
-        remarks = "";
         mAddressZipCode = "";
         mAddressCity = "";
         mAddress = "";
@@ -244,7 +241,6 @@
             instructor_number: instructorNumber,
             instructor_name: instructorName,
             email,
-            remarks,
             m_address_zip_code: mAddressZipCode,
             m_address_city: mAddressCity,
             m_address: mAddress,
@@ -290,7 +286,6 @@
             instructor_number: instructorNumber,
             instructor_name: instructorName,
             email,
-            remarks,
             m_address_zip_code: mAddressZipCode,
             m_address_city: mAddressCity,
             m_address: mAddress,
@@ -666,28 +661,6 @@
                     class="col-span-8"
                 />
             </div>
-        </div>
-
-        <!-- 備註 -->
-        <div>
-            <h3
-                class="text-sm font-semibold text-charcoal-600 mb-3 flex items-center gap-2"
-            >
-                <svg
-                    class="w-4 h-4 text-amber-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                    /></svg
-                >
-                其他
-            </h3>
-            <GlassInput label="備註" bind:value={remarks} />
         </div>
     </GlassCard>
 
