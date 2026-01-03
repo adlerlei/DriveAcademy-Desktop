@@ -542,7 +542,6 @@
                         type="text"
                         class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center"
                         bind:value={rAddressZipCode}
-                        placeholder="3-5碼"
                     />
                 </div>
                 <div class="col-span-1 flex flex-col gap-1.5">
@@ -682,7 +681,6 @@
                         type="text"
                         class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center"
                         bind:value={rAddressZipCode}
-                        placeholder="3-5碼"
                     />
                 </div>
                 <GlassInput
@@ -760,7 +758,6 @@
                         type="text"
                         class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center"
                         bind:value={mAddressZipCode}
-                        placeholder="3-5碼"
                     />
                 </div>
                 <GlassInput
