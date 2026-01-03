@@ -164,6 +164,18 @@
         mAddress = rAddress;
     }
 
+    // ========== 自動同步戶籍地址到通訊地址 ==========
+    $effect(() => {
+        // 當戶籍地址變更時，自動同步到通訊地址
+        if (rCity && rDistrict) {
+            mCity = rCity;
+            mDistrict = rDistrict;
+            mAddressZipCode = rAddressZipCode;
+            mAddressCity = rAddressCity;
+            mAddress = rAddress;
+        }
+    });
+
     // ========== 查詢功能 ==========
     async function searchStudent() {
         if (!searchQuery.trim()) return;
@@ -668,9 +680,9 @@
                     >
                     <input
                         type="text"
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 bg-charcoal-50 text-center"
-                        value={rAddressZipCode}
-                        disabled
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center"
+                        bind:value={rAddressZipCode}
+                        placeholder="3-5碼"
                     />
                 </div>
                 <GlassInput
@@ -701,13 +713,11 @@
                         stroke-linejoin="round"
                         stroke-width="2"
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    /></svg
+                    ></path></svg
                 >
                 通訊地址
-                <button
-                    type="button"
-                    class="ml-2 text-xs text-amber-600 hover:text-amber-700 underline"
-                    onclick={copyFromPermanentAddress}>同戶籍地址</button
+                <span class="ml-2 text-xs text-charcoal-400"
+                    >（自動同步戶籍地址，可修改）</span
                 >
             </h3>
             <div class="grid grid-cols-12 gap-3">
