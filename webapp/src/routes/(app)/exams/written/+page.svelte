@@ -248,14 +248,14 @@
                 label="筆試日期"
                 type="date"
                 bind:value={writtenTestDate}
-                class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
+                class="col-span-full sm:col-span-3 md:col-span-3"
             />
             <GlassInput
                 label="場次"
                 bind:value={examSession}
-                class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-2"
+                class="col-span-full sm:col-span-3 md:col-span-2"
             />
-            <div class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 sm:col-span-3 md:col-span-2 flex flex-col gap-1.5">
+            <div class="col-span-full sm:col-span-3 md:col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
                     >號碼（自動）</label
                 >
@@ -266,7 +266,7 @@
                     disabled
                 />
             </div>
-            <GlassInput label="代碼" bind:value={examCode} class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-2" />
+            <GlassInput label="代碼" bind:value={examCode} class="col-span-full sm:col-span-3 md:col-span-2" />
         </div>
     </GlassCard>
 
