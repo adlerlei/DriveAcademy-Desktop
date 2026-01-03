@@ -1,11 +1,13 @@
 <script lang="ts">
     import type { HTMLInputAttributes } from "svelte/elements";
+    import type { Snippet } from "svelte";
 
     interface Props extends HTMLInputAttributes {
         label?: string;
         error?: string;
         hint?: string;
         value?: string;
+        icon?: Snippet;
     }
 
     let {
@@ -14,6 +16,7 @@
         hint,
         id,
         value = $bindable(""),
+        icon,
         class: className = "",
         ...restProps
     }: Props = $props();
@@ -31,18 +34,29 @@
         </label>
     {/if}
 
-    <input
-        id={inputId}
-        bind:value
-        class="
-			h-10 w-full px-4 rounded-md
-			glass-input
-			text-charcoal-800
-			focus:outline-none
-			{error ? 'ring-2 ring-coral-400/50 !border-coral-400' : ''}
-		"
-        {...restProps}
-    />
+    <div class="relative">
+        {#if icon}
+            <div
+                class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                style="color: #a2d2ff;"
+            >
+                {@render icon()}
+            </div>
+        {/if}
+        <input
+            id={inputId}
+            bind:value
+            class="
+				h-10 w-full rounded-md
+				glass-input
+				text-charcoal-800
+				focus:outline-none
+				{icon ? 'pl-10 pr-4' : 'px-4'}
+				{error ? 'ring-2 ring-coral-400/50 !border-coral-400' : ''}
+			"
+            {...restProps}
+        />
+    </div>
 
     {#if error}
         <p class="text-sm text-coral-500">{error}</p>

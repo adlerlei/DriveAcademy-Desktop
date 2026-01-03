@@ -378,9 +378,6 @@
         <h1 class="text-2xl font-bold text-charcoal-800">
             {t("nav.students")}
         </h1>
-        <p class="mt-1 text-charcoal-600">
-            建立、查詢、修改與刪除學員的詳細個人資料
-        </p>
     </div>
 
     <!-- 查詢區塊 -->
@@ -391,21 +388,25 @@
                     placeholder="輸入學號、姓名或身分證字號搜尋..."
                     bind:value={searchQuery}
                     onkeydown={(e) => e.key === "Enter" && searchStudent()}
-                />
+                >
+                    {#snippet icon()}
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                        </svg>
+                    {/snippet}
+                </GlassInput>
             </div>
             <GlassButton variant="primary" onclick={searchStudent}>
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    /></svg
-                >
                 搜尋
             </GlassButton>
         </div>
@@ -445,7 +446,9 @@
                 訓練分類
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
-                <div class="col-span-full sm:col-span-3 md:col-span-5 flex flex-col gap-1.5">
+                <div
+                    class="col-span-full sm:col-span-3 md:col-span-5 flex flex-col gap-1.5"
+                >
                     <label class="text-sm font-medium text-charcoal-700"
                         >訓練班別</label
                     >
@@ -460,7 +463,9 @@
                         {/each}
                     </select>
                 </div>
-                <div class="col-span-full sm:col-span-3 md:col-span-5 flex flex-col gap-1.5">
+                <div
+                    class="col-span-full sm:col-span-3 md:col-span-5 flex flex-col gap-1.5"
+                >
                     <label class="text-sm font-medium text-charcoal-700"
                         >考照類別</label
                     >

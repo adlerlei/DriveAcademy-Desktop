@@ -160,9 +160,6 @@
         <h1 class="text-2xl font-bold text-charcoal-800">
             {t("nav.annualPlan")}
         </h1>
-        <p class="mt-1 text-charcoal-600">
-            建立駕訓班的年度開班計畫，設定各班別的期別、梯次與開結訓日期
-        </p>
     </div>
 
     <!-- 新增期別資料 -->

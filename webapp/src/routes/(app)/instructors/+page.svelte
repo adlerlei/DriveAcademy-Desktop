@@ -183,9 +183,6 @@
         <h1 class="text-2xl font-bold text-charcoal-800">
             {t("nav.instructors")}
         </h1>
-        <p class="mt-1 text-charcoal-600">
-            建立、查詢、修改與刪除駕訓班的教練基本資料
-        </p>
     </div>
 
     <!-- 查詢區塊 -->
@@ -196,21 +193,25 @@
                     placeholder="輸入教練編號或姓名搜尋..."
                     bind:value={searchQuery}
                     onkeydown={(e) => e.key === "Enter" && searchInstructor()}
-                />
+                >
+                    {#snippet icon()}
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                        </svg>
+                    {/snippet}
+                </GlassInput>
             </div>
             <GlassButton variant="primary" onclick={searchInstructor}>
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    /></svg
-                >
                 搜尋
             </GlassButton>
         </div>
@@ -250,7 +251,11 @@
                 bind:value={number}
                 class="col-span-full sm:col-span-3 md:col-span-3"
             />
-            <GlassInput label="教練姓名" bind:value={name} class="col-span-full sm:col-span-3 md:col-span-3" />
+            <GlassInput
+                label="教練姓名"
+                bind:value={name}
+                class="col-span-full sm:col-span-3 md:col-span-3"
+            />
             <GlassInput
                 label="出生日期"
                 type="date"

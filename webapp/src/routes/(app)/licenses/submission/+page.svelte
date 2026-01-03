@@ -108,51 +108,36 @@
         <h1 class="text-2xl font-bold text-charcoal-800">
             {t("nav.licenseSubmission")}
         </h1>
-        <p class="mt-1 text-charcoal-600">
-            批次處理學員的學習駕照（學照）送件作業
-        </p>
     </div>
 
     <GlassCard>
-        <h2
-            class="text-lg font-semibold text-charcoal-800 mb-4 flex items-center gap-2"
-        >
-            <svg
-                class="w-5 h-5 text-amber-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                /></svg
-            >
-            學員查詢
-        </h2>
         <div class="flex items-center gap-4">
             <div class="flex-1">
                 <GlassInput
                     placeholder="輸入學員編號、姓名、身分證字號或手機搜尋..."
                     bind:value={searchQuery}
                     onkeydown={(e) => e.key === "Enter" && searchStudent()}
-                />
+                >
+                    {#snippet icon()}
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                        </svg>
+                    {/snippet}
+                </GlassInput>
             </div>
-            <GlassButton variant="primary" onclick={searchStudent}
-                ><svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    /></svg
-                >搜尋</GlassButton
-            >
+            <GlassButton variant="primary" onclick={searchStudent}>
+                搜尋
+            </GlassButton>
         </div>
     </GlassCard>
 
