@@ -155,6 +155,15 @@
         mAddressCity = mCity + district;
     }
 
+    // ========== 複製戶籍地址到通訊地址 ==========
+    function copyFromPermanentAddress() {
+        mCity = rCity;
+        mDistrict = rDistrict;
+        mAddressZipCode = rAddressZipCode;
+        mAddressCity = rAddressCity;
+        mAddress = rAddress;
+    }
+
     // ========== 查詢功能 ==========
     async function searchStudent() {
         if (!searchQuery.trim()) return;
@@ -515,6 +524,17 @@
                 />
                 <div class="col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
+                        >郵遞區號</label
+                    >
+                    <input
+                        type="text"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center"
+                        bind:value={rAddressZipCode}
+                        placeholder="3-5碼"
+                    />
+                </div>
+                <div class="col-span-1 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
                         >性別</label
                     >
                     <select
@@ -684,6 +704,11 @@
                     /></svg
                 >
                 通訊地址
+                <button
+                    type="button"
+                    class="ml-2 text-xs text-amber-600 hover:text-amber-700 underline"
+                    onclick={copyFromPermanentAddress}>同戶籍地址</button
+                >
             </h3>
             <div class="grid grid-cols-12 gap-3">
                 <div class="col-span-2 flex flex-col gap-1.5">
@@ -723,9 +748,9 @@
                     >
                     <input
                         type="text"
-                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 bg-charcoal-50 text-center"
-                        value={mAddressZipCode}
-                        disabled
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 text-center"
+                        bind:value={mAddressZipCode}
+                        placeholder="3-5碼"
                     />
                 </div>
                 <GlassInput
