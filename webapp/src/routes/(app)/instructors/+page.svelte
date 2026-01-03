@@ -248,19 +248,19 @@
             <GlassInput
                 label="教練編號"
                 bind:value={number}
-                class="col-span-1 sm:col-span-3 md:col-span-3"
+                class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
             />
-            <GlassInput label="教練姓名" bind:value={name} class="col-span-1 sm:col-span-3 md:col-span-3" />
+            <GlassInput label="教練姓名" bind:value={name} class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3" />
             <GlassInput
                 label="出生日期"
                 type="date"
                 bind:value={birthDate}
-                class="col-span-1 sm:col-span-3 md:col-span-3"
+                class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
             />
             <GlassInput
                 label="教練證號"
                 bind:value={instructorNumber}
-                class="col-span-1 sm:col-span-3 md:col-span-3"
+                class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
             />
         </div>
     </GlassCard>

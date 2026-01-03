@@ -445,7 +445,7 @@
                 訓練分類
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
-                <div class="col-span-5 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-5 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >訓練班別</label
                     >
@@ -460,7 +460,7 @@
                         {/each}
                     </select>
                 </div>
-                <div class="col-span-5 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-5 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >考照類別</label
                     >
@@ -476,7 +476,7 @@
                     </select>
                 </div>
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 sm:col-span-3 md:col-span-2 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >梯次</label
@@ -514,7 +514,7 @@
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <div
-                    class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >學員編號</label
@@ -531,12 +531,12 @@
                 <GlassInput
                     label="姓名"
                     bind:value={studentName}
-                    class="col-span-1 sm:col-span-3 md:col-span-3"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <GlassInput
                     label="身分證號"
                     bind:value={nationalIdNo}
-                    class="col-span-1 sm:col-span-3 md:col-span-3"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <div
                     class="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col gap-1.5"
@@ -569,10 +569,10 @@
                     label="出生日期"
                     type="date"
                     bind:value={birthDate}
-                    class="col-span-1 sm:col-span-3 md:col-span-2"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-2"
                 />
                 <div
-                    class="col-span-1 sm:col-span-3 md:col-span-4 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-4 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >指導教練</label
@@ -616,18 +616,18 @@
                 <GlassInput
                     label="手機"
                     bind:value={mobilePhone}
-                    class="col-span-1 sm:col-span-3 md:col-span-3"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <GlassInput
                     label="室內電話"
                     bind:value={homePhone}
-                    class="col-span-1 sm:col-span-3 md:col-span-3"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <GlassInput
                     label="電子郵件"
                     type="email"
                     bind:value={email}
-                    class="col-span-1 sm:col-span-6 md:col-span-6"
+                    class="col-span-1 sm:col-span-1 sm:col-span-6 md:col-span-6 md:col-span-1 sm:col-span-6 md:col-span-6"
                 />
             </div>
         </div>
@@ -653,7 +653,7 @@
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 sm:col-span-3 md:col-span-2 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >縣市</label
@@ -670,7 +670,7 @@
                     </select>
                 </div>
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 sm:col-span-3 md:col-span-2 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >區域</label
@@ -688,7 +688,7 @@
                     </select>
                 </div>
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-1 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
@@ -702,7 +702,7 @@
                 <GlassInput
                     label="詳細地址"
                     bind:value={rAddress}
-                    class="col-span-1 sm:col-span-6 md:col-span-7"
+                    class="col-span-1 sm:col-span-1 sm:col-span-6 md:col-span-6 md:col-span-7"
                 />
             </div>
         </div>
@@ -736,7 +736,7 @@
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 sm:col-span-3 md:col-span-2 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >縣市</label
@@ -753,7 +753,7 @@
                     </select>
                 </div>
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 sm:col-span-3 md:col-span-2 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >區域</label
@@ -771,7 +771,7 @@
                     </select>
                 </div>
                 <div
-                    class="col-span-1 sm:col-span-2 md:col-span-1 flex flex-col gap-1.5"
+                    class="col-span-1 sm:col-span-1 sm:col-span-3 md:col-span-2 md:col-span-1 flex flex-col gap-1.5"
                 >
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
@@ -785,7 +785,7 @@
                 <GlassInput
                     label="詳細地址"
                     bind:value={mAddress}
-                    class="col-span-1 sm:col-span-6 md:col-span-7"
+                    class="col-span-1 sm:col-span-1 sm:col-span-6 md:col-span-6 md:col-span-7"
                 />
             </div>
         </div>

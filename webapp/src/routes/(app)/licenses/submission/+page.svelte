@@ -192,7 +192,7 @@
                     class="text-charcoal-800 font-medium">{email || "-"}</span
                 >
             </div>
-            <div class="flex flex-col gap-1 col-span-2">
+            <div class="flex flex-col gap-1 col-span-1 sm:col-span-3 md:col-span-2">
                 <span class="text-sm text-charcoal-500">戶籍地址</span><span
                     class="text-charcoal-800 font-medium"
                     >{rAddressZipCode
