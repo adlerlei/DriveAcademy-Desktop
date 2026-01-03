@@ -232,7 +232,7 @@
             >
             學照登錄
         </h2>
-        <div class="grid grid-cols-12 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
             <GlassInput
                 label="登錄日期"
                 type="date"

@@ -444,7 +444,7 @@
                 >
                 訓練分類
             </h3>
-            <div class="grid grid-cols-12 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <div class="col-span-5 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >訓練班別</label
@@ -475,7 +475,7 @@
                         {/each}
                     </select>
                 </div>
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >梯次</label
                     >
@@ -510,8 +510,8 @@
                 >
                 個人資料
             </h3>
-            <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-3 flex flex-col gap-1.5">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
+                <div class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >學員編號</label
                     >
@@ -534,7 +534,7 @@
                     bind:value={nationalIdNo}
                     class="col-span-3"
                 />
-                <div class="col-span-1 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
                     >
@@ -544,7 +544,7 @@
                         bind:value={rAddressZipCode}
                     />
                 </div>
-                <div class="col-span-1 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >性別</label
                     >
@@ -563,7 +563,7 @@
                     bind:value={birthDate}
                     class="col-span-2"
                 />
-                <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-3 md:col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >指導教練</label
                     >
@@ -602,7 +602,7 @@
                 >
                 聯絡資訊
             </h3>
-            <div class="grid grid-cols-12 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <GlassInput
                     label="手機"
                     bind:value={mobilePhone}
@@ -641,8 +641,8 @@
                 >
                 戶籍地址
             </h3>
-            <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-2 flex flex-col gap-1.5">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
+                <div class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >縣市</label
                     >
@@ -657,7 +657,7 @@
                             >{/each}
                     </select>
                 </div>
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >區域</label
                     >
@@ -673,7 +673,7 @@
                             >{/each}
                     </select>
                 </div>
-                <div class="col-span-1 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
                     >
@@ -718,8 +718,8 @@
                     >（自動同步戶籍地址，可修改）</span
                 >
             </h3>
-            <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-2 flex flex-col gap-1.5">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
+                <div class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >縣市</label
                     >
@@ -734,7 +734,7 @@
                             >{/each}
                     </select>
                 </div>
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >區域</label
                     >
@@ -750,7 +750,7 @@
                             >{/each}
                     </select>
                 </div>
-                <div class="col-span-1 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >郵遞區號</label
                     >

@@ -244,7 +244,7 @@
             {/if}
         </div>
 
-        <div class="grid grid-cols-12 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
             <GlassInput
                 label="教練編號"
                 bind:value={number}

@@ -289,7 +289,7 @@
             >
             可編輯欄位
         </h3>
-        <div class="grid grid-cols-12 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
             <GlassInput
                 label="學照日期"
                 type="date"
@@ -323,8 +323,8 @@
             >
             M2補訓登錄
         </h2>
-        <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-3 flex flex-col gap-1.5">
+        <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
+            <div class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700">來源</label
                 >
                 <select
@@ -338,7 +338,7 @@
                         >{/each}
                 </select>
             </div>
-            <div class="col-span-3 flex flex-col gap-1.5">
+            <div class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
                     >手自排</label
                 >
@@ -353,7 +353,7 @@
                         >{/each}
                 </select>
             </div>
-            <div class="col-span-3 flex flex-col gap-1.5">
+            <div class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
                     >指導教練</label
                 >
@@ -368,7 +368,7 @@
                         >{/each}
                 </select>
             </div>
-            <div class="col-span-3 flex flex-col gap-1.5">
+            <div class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5">
                 <label class="text-sm font-medium text-charcoal-700"
                     >筆路 <span class="text-coral-500">*</span></label
                 >

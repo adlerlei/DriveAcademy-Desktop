@@ -204,7 +204,7 @@
                 >
                 班別設定
             </h3>
-            <div class="grid grid-cols-12 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <div class="col-span-5 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >訓練班別 <span class="text-coral-500">*</span></label
@@ -220,7 +220,7 @@
                         {/each}
                     </select>
                 </div>
-                <div class="col-span-2 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >梯次 <span class="text-coral-500">*</span></label
                     >
@@ -257,7 +257,7 @@
                 >
                 日期設定
             </h3>
-            <div class="grid grid-cols-12 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-3">
                 <GlassInput
                     label="開訓日期"
                     type="date"
@@ -270,7 +270,7 @@
                     bind:value={endDate}
                     class="col-span-4"
                 />
-                <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="col-span-1 sm:col-span-3 md:col-span-4 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
                         >期別代碼（自動生成）</label
                     >
