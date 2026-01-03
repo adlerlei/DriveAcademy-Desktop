@@ -5,6 +5,17 @@
 
     let { children } = $props();
 
+    // 側邊欄狀態
+    let isSidebarOpen = $state(false);
+
+    function toggleSidebar() {
+        isSidebarOpen = !isSidebarOpen;
+    }
+
+    function closeSidebar() {
+        isSidebarOpen = false;
+    }
+
     // Navigation items matching original desktop app menu
     const navItems = [
         { id: "home", label: t("nav.home"), href: "/" },
@@ -57,12 +68,47 @@
 </script>
 
 <div class="min-h-screen flex">
+    <!-- 漢堡選單按鈕 (手機版) -->
+    <button
+        class="fixed top-4 left-4 z-50 p-2 rounded-lg glass-dark text-white md:hidden"
+        onclick={toggleSidebar}
+        aria-label="開關選單"
+    >
+        <svg
+            class="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            {#if isSidebarOpen}
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+            {:else}
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                />
+            {/if}
+        </svg>
+    </button>
+
     <!-- Sidebar -->
-    <GlassSidebar items={navItems} {currentPath} />
+    <GlassSidebar
+        items={navItems}
+        {currentPath}
+        isOpen={isSidebarOpen}
+        onClose={closeSidebar}
+    />
 
     <!-- Main Content -->
-    <main class="flex-1 ml-64 min-h-screen">
-        <div class="p-8">
+    <main class="flex-1 md:ml-64 ml-0 min-h-screen transition-all duration-300">
+        <div class="p-4 md:p-8 pt-16 md:pt-8">
             {@render children()}
         </div>
     </main>

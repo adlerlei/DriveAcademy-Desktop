@@ -12,6 +12,8 @@
         items: NavItem[];
         currentPath: string;
         collapsed?: boolean;
+        isOpen?: boolean;
+        onClose?: () => void;
         logo?: Snippet;
         footer?: Snippet;
     }
@@ -20,6 +22,8 @@
         items,
         currentPath,
         collapsed = false,
+        isOpen = true,
+        onClose,
         logo,
         footer,
     }: Props = $props();
@@ -28,17 +32,35 @@
         if (href === "/") return currentPath === "/";
         return currentPath.startsWith(href);
     }
+
+    function handleNavClick() {
+        // 手機版點擊導航項目後關閉側邊欄
+        if (onClose && window.innerWidth < 768) {
+            onClose();
+        }
+    }
 </script>
+
+<!-- 遮罩層 (手機版) -->
+{#if isOpen}
+    <button
+        class="fixed inset-0 bg-black/50 z-30 md:hidden"
+        onclick={onClose}
+        aria-label="關閉選單"
+    ></button>
+{/if}
 
 <aside
     class="
-		fixed left-0 top-0 h-screen
-		glass-dark text-white
-		flex flex-col
-		transition-all duration-[var(--duration-slow)] ease-[var(--ease-smooth)]
-		z-40
-		{collapsed ? 'w-16' : 'w-64'}
-	"
+        fixed left-0 top-0 h-screen
+        glass-dark text-white
+        flex flex-col
+        transition-all duration-300 ease-out
+        z-40
+        {collapsed ? 'w-16' : 'w-64'}
+        {isOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:translate-x-0
+    "
 >
     <!-- Logo Area -->
     <div
@@ -63,13 +85,14 @@
                 <li>
                     <a
                         href={item.href}
+                        onclick={handleNavClick}
                         class="
-							flex items-center gap-3 px-3 py-2.5 rounded-md
-							transition-all duration-[var(--duration-normal)] ease-[var(--ease-smooth)]
-							{isActive(item.href)
+                            flex items-center gap-3 px-3 py-2.5 rounded-md
+                            transition-all duration-200 ease-out
+                            {isActive(item.href)
                             ? 'bg-white/15 text-amber-400'
                             : 'text-white/70 hover:bg-white/10 hover:text-white'}
-						"
+                        "
                         title={collapsed ? item.label : undefined}
                     >
                         {#if item.icon}

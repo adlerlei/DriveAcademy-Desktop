@@ -44,8 +44,8 @@
 </script>
 
 <div class="glass rounded-xl overflow-hidden shadow-[var(--shadow-glass)]">
-    <div class="overflow-x-auto">
-        <table class="w-full">
+    <div class="overflow-x-auto -mx-px">
+        <table class="w-full min-w-[640px]">
             <thead>
                 <tr class="bg-charcoal-800/5 border-b border-charcoal-800/10">
                     {#each columns as column}
