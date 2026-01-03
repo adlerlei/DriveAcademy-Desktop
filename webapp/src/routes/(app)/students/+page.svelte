@@ -1,6 +1,12 @@
 <script lang="ts">
     import { GlassCard, GlassButton, GlassInput } from "$lib/components";
     import { t } from "$lib/i18n";
+    import {
+        taiwanAddress,
+        getCities,
+        getDistricts,
+        getZipCode,
+    } from "$lib/data/taiwan-address";
 
     // ========== 固定資料（整合顯示格式）==========
     const trainingTypes = [
@@ -28,14 +34,6 @@
     const batches = ["A", "B"];
     const genders = ["男", "女"];
 
-    const addressData = [
-        { zip_code: "100", city: "台北市中正區" },
-        { zip_code: "106", city: "台北市大安區" },
-        { zip_code: "110", city: "台北市信義區" },
-        { zip_code: "300", city: "新竹市" },
-        { zip_code: "320", city: "桃園市中壢區" },
-    ];
-
     const instructors = [
         { number: "001", name: "王大明" },
         { number: "002", name: "李小華" },
@@ -61,14 +59,20 @@
     let nationalIdNo = $state("");
     let birthDate = $state("");
     let mobilePhone = $state("");
-    let rAddressZipCode = $state("");
-    let rAddressCity = $state("");
-    let rAddress = $state("");
     let homePhone = $state("");
     let gender = $state("");
     let instructorNumber = $state("");
     let instructorName = $state("");
     let email = $state("");
+    // 戶籍地址（三層連動）
+    let rCity = $state(""); // 縣市
+    let rDistrict = $state(""); // 區域
+    let rAddressZipCode = $state(""); // 郵遞區號（自動帶入）
+    let rAddressCity = $state(""); // 完整縣市區名稱
+    let rAddress = $state(""); // 詳細地址
+    // 通訊地址（三層連動）
+    let mCity = $state("");
+    let mDistrict = $state("");
     let mAddressZipCode = $state("");
     let mAddressCity = $state("");
     let mAddress = $state("");
@@ -120,16 +124,35 @@
         instructorName = found?.name || "";
     }
 
-    function handleAddressChange(type: "r" | "m", e: Event) {
-        const zip = (e.target as HTMLSelectElement).value;
-        const found = addressData.find((a) => a.zip_code === zip);
-        if (type === "r") {
-            rAddressZipCode = zip;
-            rAddressCity = found?.city || "";
-        } else {
-            mAddressZipCode = zip;
-            mAddressCity = found?.city || "";
-        }
+    // ========== 地址連動處理 ==========
+    function handleRCityChange(e: Event) {
+        const city = (e.target as HTMLSelectElement).value;
+        rCity = city;
+        rDistrict = ""; // 重置區域
+        rAddressZipCode = "";
+        rAddressCity = city;
+    }
+
+    function handleRDistrictChange(e: Event) {
+        const district = (e.target as HTMLSelectElement).value;
+        rDistrict = district;
+        rAddressZipCode = getZipCode(rCity, district);
+        rAddressCity = rCity + district;
+    }
+
+    function handleMCityChange(e: Event) {
+        const city = (e.target as HTMLSelectElement).value;
+        mCity = city;
+        mDistrict = "";
+        mAddressZipCode = "";
+        mAddressCity = city;
+    }
+
+    function handleMDistrictChange(e: Event) {
+        const district = (e.target as HTMLSelectElement).value;
+        mDistrict = district;
+        mAddressZipCode = getZipCode(mCity, district);
+        mAddressCity = mCity + district;
     }
 
     // ========== 查詢功能 ==========
@@ -588,27 +611,52 @@
                 戶籍地址
             </h3>
             <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
-                        >郵遞區號 / 縣市區</label
+                        >縣市</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={rAddressZipCode}
-                        onchange={(e) => handleAddressChange("r", e)}
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 focus:outline-none"
+                        value={rCity}
+                        onchange={handleRCityChange}
+                    >
+                        <option value="">選擇縣市</option>
+                        {#each getCities() as city}<option value={city}
+                                >{city}</option
+                            >{/each}
+                    </select>
+                </div>
+                <div class="col-span-2 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
+                        >區域</label
+                    >
+                    <select
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 focus:outline-none"
+                        value={rDistrict}
+                        onchange={handleRDistrictChange}
+                        disabled={!rCity}
                     >
                         <option value="">選擇區域</option>
-                        {#each addressData as a}
-                            <option value={a.zip_code}
-                                >{a.zip_code} - {a.city}</option
-                            >
-                        {/each}
+                        {#each getDistricts(rCity) as district}<option
+                                value={district}>{district}</option
+                            >{/each}
                     </select>
+                </div>
+                <div class="col-span-1 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
+                        >郵遞區號</label
+                    >
+                    <input
+                        type="text"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 bg-charcoal-50 text-center"
+                        value={rAddressZipCode}
+                        disabled
+                    />
                 </div>
                 <GlassInput
                     label="詳細地址"
                     bind:value={rAddress}
-                    class="col-span-8"
+                    class="col-span-7"
                 />
             </div>
         </div>
@@ -638,27 +686,52 @@
                 通訊地址
             </h3>
             <div class="grid grid-cols-12 gap-3">
-                <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="col-span-2 flex flex-col gap-1.5">
                     <label class="text-sm font-medium text-charcoal-700"
-                        >郵遞區號 / 縣市區</label
+                        >縣市</label
                     >
                     <select
-                        class="h-10 w-full px-3 glass-input rounded-md text-charcoal-800 focus:outline-none"
-                        value={mAddressZipCode}
-                        onchange={(e) => handleAddressChange("m", e)}
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 focus:outline-none"
+                        value={mCity}
+                        onchange={handleMCityChange}
+                    >
+                        <option value="">選擇縣市</option>
+                        {#each getCities() as city}<option value={city}
+                                >{city}</option
+                            >{/each}
+                    </select>
+                </div>
+                <div class="col-span-2 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
+                        >區域</label
+                    >
+                    <select
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 focus:outline-none"
+                        value={mDistrict}
+                        onchange={handleMDistrictChange}
+                        disabled={!mCity}
                     >
                         <option value="">選擇區域</option>
-                        {#each addressData as a}
-                            <option value={a.zip_code}
-                                >{a.zip_code} - {a.city}</option
-                            >
-                        {/each}
+                        {#each getDistricts(mCity) as district}<option
+                                value={district}>{district}</option
+                            >{/each}
                     </select>
+                </div>
+                <div class="col-span-1 flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-charcoal-700"
+                        >郵遞區號</label
+                    >
+                    <input
+                        type="text"
+                        class="h-10 w-full px-2 glass-input rounded-md text-charcoal-800 bg-charcoal-50 text-center"
+                        value={mAddressZipCode}
+                        disabled
+                    />
                 </div>
                 <GlassInput
                     label="詳細地址"
                     bind:value={mAddress}
-                    class="col-span-8"
+                    class="col-span-7"
                 />
             </div>
         </div>
