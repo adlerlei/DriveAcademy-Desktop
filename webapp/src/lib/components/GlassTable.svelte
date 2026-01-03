@@ -43,7 +43,9 @@
     };
 </script>
 
-<div class="glass rounded-xl overflow-hidden shadow-[var(--shadow-glass)]">
+<div
+    class="glass rounded-xl overflow-hidden shadow-[var(--shadow-glass)] max-w-full"
+>
     <div class="overflow-x-auto -mx-px">
         <table class="w-full min-w-[640px]">
             <thead>

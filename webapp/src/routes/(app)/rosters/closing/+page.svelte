@@ -306,7 +306,11 @@
                 bind:value={registerNumber}
                 class="col-span-full sm:col-span-3 md:col-span-4"
             />
-            <GlassInput label="期別" bind:value={term} class="col-span-full sm:col-span-3 md:col-span-4" />
+            <GlassInput
+                label="期別"
+                bind:value={term}
+                class="col-span-full sm:col-span-3 md:col-span-4"
+            />
         </div>
     </GlassCard>
 
@@ -330,7 +334,9 @@
             結訓登錄
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4">
-            <div class="col-span-full sm:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-4 flex flex-col gap-1.5">
+            <div
+                class="col-span-full sm:col-span-3 md:col-span-4 flex flex-col gap-1.5"
+            >
                 <label class="text-sm font-medium text-charcoal-700"
                     >指導教練 <span class="text-coral-500">*</span></label
                 >
@@ -345,7 +351,9 @@
                         >{/each}
                 </select>
             </div>
-            <div class="col-span-full sm:col-span-3 md:col-span-1 sm:col-span-3 md:col-span-3 flex flex-col gap-1.5">
+            <div
+                class="col-span-full sm:col-span-3 md:col-span-3 flex flex-col gap-1.5"
+            >
                 <label class="text-sm font-medium text-charcoal-700"
                     >手自排 <span class="text-coral-500">*</span></label
                 >
@@ -360,7 +368,9 @@
                         >{/each}
                 </select>
             </div>
-            <div class="col-span-full sm:col-span-3 md:col-span-1 sm:col-span-2 md:col-span-2 flex flex-col gap-1.5">
+            <div
+                class="col-span-full sm:col-span-2 md:col-span-2 flex flex-col gap-1.5"
+            >
                 <label class="text-sm font-medium text-charcoal-700"
                     >退訓 <span class="text-coral-500">*</span></label
                 >

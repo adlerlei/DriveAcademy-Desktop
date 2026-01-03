@@ -107,7 +107,9 @@
     />
 
     <!-- Main Content -->
-    <main class="flex-1 md:ml-64 ml-0 min-h-screen transition-all duration-300">
+    <main
+        class="flex-1 md:ml-64 ml-0 min-h-screen transition-all duration-300 overflow-x-hidden"
+    >
         <div class="p-4 md:p-8 pt-16 md:pt-8">
             {@render children()}
         </div>
