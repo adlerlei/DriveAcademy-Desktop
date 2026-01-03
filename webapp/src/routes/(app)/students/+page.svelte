@@ -531,12 +531,12 @@
                 <GlassInput
                     label="姓名"
                     bind:value={studentName}
-                    class="col-span-3"
+                    class="col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <GlassInput
                     label="身分證號"
                     bind:value={nationalIdNo}
-                    class="col-span-3"
+                    class="col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <div
                     class="col-span-1 sm:col-span-1 md:col-span-1 flex flex-col gap-1.5"
@@ -569,7 +569,7 @@
                     label="出生日期"
                     type="date"
                     bind:value={birthDate}
-                    class="col-span-2"
+                    class="col-span-1 sm:col-span-3 md:col-span-2"
                 />
                 <div
                     class="col-span-1 sm:col-span-3 md:col-span-4 flex flex-col gap-1.5"
@@ -616,18 +616,18 @@
                 <GlassInput
                     label="手機"
                     bind:value={mobilePhone}
-                    class="col-span-3"
+                    class="col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <GlassInput
                     label="室內電話"
                     bind:value={homePhone}
-                    class="col-span-3"
+                    class="col-span-1 sm:col-span-3 md:col-span-3"
                 />
                 <GlassInput
                     label="電子郵件"
                     type="email"
                     bind:value={email}
-                    class="col-span-6"
+                    class="col-span-1 sm:col-span-6 md:col-span-6"
                 />
             </div>
         </div>

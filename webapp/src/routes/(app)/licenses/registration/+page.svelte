@@ -238,20 +238,20 @@
                 type="date"
                 bind:value={registrationDate}
                 hint="會自動同步到學照日期"
-                class="col-span-4"
+                class="col-span-1 sm:col-span-3 md:col-span-4"
             />
             <GlassInput
                 label="學照日期"
                 type="date"
                 bind:value={learnerPermitDate}
                 required
-                class="col-span-4"
+                class="col-span-1 sm:col-span-3 md:col-span-4"
             />
             <GlassInput
                 label="學照號碼"
                 bind:value={learnerPermitNumber}
                 required
-                class="col-span-4"
+                class="col-span-1 sm:col-span-3 md:col-span-4"
             />
         </div>
     </GlassCard>

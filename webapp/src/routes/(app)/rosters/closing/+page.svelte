@@ -299,14 +299,14 @@
                 label="學照日期"
                 type="date"
                 bind:value={learnerPermitDate}
-                class="col-span-4"
+                class="col-span-1 sm:col-span-3 md:col-span-4"
             />
             <GlassInput
                 label="名冊號碼"
                 bind:value={registerNumber}
-                class="col-span-4"
+                class="col-span-1 sm:col-span-3 md:col-span-4"
             />
-            <GlassInput label="期別" bind:value={term} class="col-span-4" />
+            <GlassInput label="期別" bind:value={term} class="col-span-1 sm:col-span-3 md:col-span-4" />
         </div>
     </GlassCard>
 
